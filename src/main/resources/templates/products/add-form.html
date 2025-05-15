@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Product</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-container {
+      width: 50%;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .submit-btn {
+      background-color: #3B82F6;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #2563EB;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+      padding: 10px 15px;
+      background-color: #3B82F6;
+      color: white;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .back-link:hover {
+      background-color: #2563EB;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Create Product</h2>
+    <form action="#" th:action="@{/products/save}" th:object="${product}" method="post">
+      <input type="text" th:field="*{productName}" placeholder="Product Name">
+      <br>
+      <input type="text" th:field="*{price}" placeholder="Product Price">
+      <br>
+      <input type="text" th:field="*{stock}" placeholder="Product Stock">
+      <br>
+      <input type="text" th:field="*{url}" placeholder="Product Image URL">
+      <br>
+      <input type="submit" class="submit-btn" value="Submit">
+      <br>
+      <a th:href="@{/products/list}" class="back-link">Back to Products List</a>
+    </form>
+  </div>
+
+</body>
+</html>

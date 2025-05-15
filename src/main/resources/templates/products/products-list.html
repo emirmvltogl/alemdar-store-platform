@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products List</title>
+  <style>
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1E3A8A;
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.navbar .logo a {
+  color: #F8FAFC;
+  text-decoration: none;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.navbar .logo a:hover {
+  color: #FFDD57;
+}
+
+/* Kullanıcı Bilgileri ve Butonlar */
+.user-info a,
+.logout-btn,
+.login-btn,
+.add-btn {
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.logout-btn {
+  background-color: #DC2626;
+}
+
+.login-btn {
+  background-color: #3B82F6;
+}
+
+.add-btn {
+  background-color: #10B981;
+}
+
+.logout-btn:hover,
+.login-btn:hover,
+.add-btn:hover {
+  opacity: 0.8;
+}
+
+/* Ürün Kartları */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.card {
+  width: 250px; 
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Butonlar */
+.update-btn {
+  background-color: #3B82F6;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+
+.delete-btn {
+  background-color: #DC2626;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+
+.update-btn:hover,
+.delete-btn:hover {
+  opacity: 0.8;
+}
+.add-btn {
+      display: inline-block;
+      margin-top: 10px;
+      text-decoration: none;
+      padding: 10px 10px;
+      background-color: #3B82F6;
+      color: white;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .add-btn:hover {
+      background-color: #302b63;
+    }
+
+    /* Modernleştirilmiş input alanı */
+    input[type="number"] {
+      width: 20%;
+      padding: 8px 8px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      background-color: #f0f4f8;
+      color: #333;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #3B82F6;
+      background-color: #fff;
+    }
+
+    /* Modern input alanı odaklanma (focus) efekti */
+    input[type="number"]:hover {
+      border-color: #302b63;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="" alt="">
+      <a th:href="@{/}">Alemdar energy</a>
+    </div>
+    <div class="user-info">
+      <span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+      <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+        <input type="submit" class="logout-btn" value="Logout">
+      </form>
+      <a sec:authorize="!isAuthenticated()" th:href="@{/showMyLoginPage}" class="login-btn">Login</a>
+      <a sec:authorize="!isAuthenticated()" th:href="@{/user/showFormForAddDefUser}" class="add-btn">Signup</a>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+      <a th:href="@{/admin/showPanel}" class="add-btn">Admin Panel</a>
+    </div>
+  </nav>
+
+  <div class="card-container">
+    <div class="card" th:each="tempProduct : ${products}">
+      <a th:href="@{/products/{id}(id=${tempProduct.id})}" style="text-decoration: none; color: inherit;">
+        <img th:src="${tempProduct.url}" alt="Product Image">
+        <div class="card-content">
+          <h3 th:text="${tempProduct.productName}">Product Name</h3>
+          <p th:text="'Stock: ' + ${tempProduct.stock}">Stock: 0</p>
+          <p th:text="'Price: $' + ${tempProduct.price}">Price: $0</p>
+        </div>
+      </a>
+
+      <div sec:authorize="hasRole('MANAGER')">
+        <a th:href="@{/products/showFormForUpdate(productId=${tempProduct.id})}" class="update-btn">Update</a>
+        <a th:href="@{/products/deleteProduct(productId=${tempProduct.id})}" class="delete-btn">Delete</a>
+      </div>
+
+      <form action="#" th:action="@{/cart/add}" method="get">
+        <input type="hidden" name="productId" th:value="${tempProduct.id}">
+        <input type="number" name="quantity" value="1" min="1">
+        <button type="submit" class="add-btn">Add to Cart</button>
+      </form>
+
+    </div>
+  </div>
+
+  <div sec:authorize="hasRole('MANAGER')">
+    <a th:href="@{/products/showFormForAdd}" class="add-btn">Add Product</a>
+  </div>
+
+  
+
+
+</body>
+
+</html>

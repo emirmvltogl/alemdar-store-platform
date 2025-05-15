@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find User</title>
+  <style>
+    /* Genel Sayfa Ayarları */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 50%;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #FFDD57;
+    }
+
+    .input-group {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    a {
+      color: #FFDD57;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigasyon Menüsü -->
+  <nav>
+    <ul>
+      <li><a th:href="@{/}">Ana Sayfa</a></li>
+      <li><a th:href="@{/products/list}">Ürünlerimiz</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Find User</h2>
+    <form th:action="@{/user/showFindingUser}" method="get">
+      <div class="input-group">
+        <label for="username" style="color: #F8FAFC;">User Name:</label>
+        <input type="text" name="username" id="username" placeholder="Enter username" required />
+      </div>
+
+      <div class="input-group">
+        <input type="submit" value="Search">
+      </div>
+    </form>
+
+    <br><br>
+    <a th:href="@{/admin/showPanel}">Back to Admin Panel</a>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Detail</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .product-detail {
+      width: 50%;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+    }
+
+    img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #FFDD57;
+      font-size: 26px;
+    }
+
+    .price {
+      font-size: 22px;
+      font-weight: bold;
+      color: #FFDD57;
+    }
+
+    a, .add-btn {
+      display: inline-block;
+      margin-top: 15px;
+      text-decoration: none;
+      padding: 10px 15px;
+      background-color: #3B82F6;
+      color: white;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    a:hover, .add-btn:hover {
+      background-color: #302b63;
+    }
+
+    /* Modernleştirilmiş input alanı */
+    input[type="number"] {
+      width: 5%;
+      padding: 8px 8px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      background-color: #f0f4f8;
+      color: #333;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #3B82F6;
+      background-color: #fff;
+    }
+
+    /* Modern input alanı odaklanma (focus) efekti */
+    input[type="number"]:hover {
+      border-color: #302b63;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="product-detail">
+    <!-- Ürün görseli -->
+    <img th:src="${product.url}" alt="Product Image">
+    
+    <!-- Ürün adı -->
+    <h2 th:text="${product.productName}">Product Name</h2>
+    
+    <!-- Stok miktarı -->
+    <p th:text="'Stock: ' + ${product.stock}">Stock: 0</p>
+    
+    <!-- Fiyat -->
+    <p class="price" th:text="'Price: $' + ${product.price}">Price: $0</p>
+    
+    <!-- Ürün listesine geri dön linki -->
+    
+    
+    <!-- Sepete ürün ekleme formu -->
+    <form action="#" th:action="@{/cart/add}" method="get">
+      <!-- Ürün ID'si gizli alan -->
+      <input type="hidden" name="productId" th:value="${product.id}">
+      
+      <!-- Miktar (1'den küçük olmasın) -->
+      <input type="number" name="quantity" value="1" min="1" required>
+      
+      <!-- Sepete ekleme butonu -->
+      <button type="submit" class="add-btn">Add to Cart</button>
+    </form>
+    <br>
+    <a href="/products/list">Back to Products</a>
+
+  </div>
+
+</body>
+
+</html>

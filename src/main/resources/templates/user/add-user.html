@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create User Admin</title>
+  <style>
+    /* Genel Sayfa Ayarları */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 50%;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+    }
+
+    h2 {
+      color: #FFDD57;
+    }
+
+    label {
+      font-size: 16px;
+      margin-right: 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .role-checkbox {
+      margin-bottom: 15px;
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    a {
+      color: #FFDD57;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>Create User Admin</h2>
+
+    <form action="#" th:action="@{/user/save}" th:object="${user}" method="post">
+
+      <label for="username">User name: </label>
+      <input type="text" th:field="*{username}" placeholder="User Name" required>
+      <br><br>
+
+      <label for="password">Password: </label>
+      <input type="text" th:field="*{password}" placeholder="Password" required>
+      <br><br>
+
+      <label for="email">Email: </label>
+      <input type="text" th:field="*{email}" placeholder="Email" required>
+      <br><br>
+
+      <label for="roles">Roles: </label>
+      <div th:each="role : ${allRoles}" class="role-checkbox">
+        <input type="checkbox" th:field="*{roles}" th:value="${role.id}" />
+        <span th:text="${role.name}"></span><br/>
+      </div>
+
+      <br><br>
+      <input type="submit" value="Submit">
+      <br><br>
+
+      <a th:href="@{/admin/showPanel}">Back to Admin Panel</a>
+    </form>
+  </div>
+
+</body>
+
+</html>

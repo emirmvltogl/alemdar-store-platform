@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Login Page</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+      text-align: center;
+    }
+
+    .card-header {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 95%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .form-control:focus {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+      border-color: #3B82F6;
+      outline: none;
+    }
+
+    .btn-login {
+      width: 100%;
+      background-color: #3B82F6;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-login:hover {
+      background-color: #2563EB;
+    }
+
+    .extra-buttons {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .extra-buttons a {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 10px;
+      text-align: center;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .extra-buttons a:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .alert {
+      font-size: 14px;
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <div class="card-header">Sign In</div>
+    <div class="card-body">
+
+      <!-- Login Form -->
+      <form action="#" th:action="@{/authenticateTheUser}" method="post">
+
+        <!-- Place for messages: error, alert etc ... -->
+        <div th:if="${param.error}">
+          <div class="alert alert-danger">
+            Invalid username and password.
+          </div>
+        </div>
+
+        <div th:if="${param.logout}">
+          <div class="alert alert-success">
+            You have been logged out.
+          </div>
+        </div>
+
+        <!-- User name -->
+        <input type="text" name="username" placeholder="Username" class="form-control" />
+
+        <!-- Password -->
+        <input type="password" name="password" placeholder="Password" class="form-control" />
+
+        <!-- Login Button -->
+        <button type="submit" class="btn btn-login">Login</button>
+
+        <!-- Extra Buttons -->
+        <div class="extra-buttons">
+          <a th:href="@{/pas/send-mail}">Şifremi Unuttum</a>
+          <a th:href="@{/user/showFormForAddDefUser}">Kaydol</a>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</body>
+
+</html>
